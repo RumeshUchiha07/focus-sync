@@ -1,46 +1,48 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import ScreenWrapper from "./components/ScreenWrapper";
 
-export default function StudyPlanner() {
-  const [session, setSession] = useState("");
-  const [sessions, setSessions] = useState<string[]>([]);
+function simpleMarkdown(text: string) {
+  // Very basic: *bold*, _italic_
+  return text
+    .replace(/\*([^\*]+)\*/g, (_, m) => `<b>${m}</b>`)
+    .replace(/_([^_]+)_/g, (_, m) => `<i>${m}</i>`);
+}
 
-  const addSession = () => {
-    if (!session.trim()) return;
-    setSessions((prev) => [session.trim(), ...prev]);
-    setSession("");
-  };
+export default function Notes() {
+  const [note, setNote] = useState("");
+  const [notes, setNotes] = useState<string[]>([]);
 
-  const removeSession = (index: number) => {
-    setSessions((prev) => prev.filter((_, i) => i !== index));
+  const addNote = () => {
+    if (!note.trim()) return;
+    setNotes((prev) => [note.trim(), ...prev]);
+    setNote("");
   };
 
   return (
     <ScreenWrapper>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Study Planner</Text>
+        <Text style={styles.title}>Notes</Text>
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
-            placeholder="Add study session"
-            value={session}
-            onChangeText={setSession}
+            placeholder="Quick note... (supports *bold* and _italic_)"
+            value={note}
+            onChangeText={setNote}
             placeholderTextColor="#bbb"
+            multiline
           />
-          <TouchableOpacity style={styles.addButton} onPress={addSession}>
-            <Text style={styles.addButtonText}>Add</Text>
+          <TouchableOpacity style={styles.addButton} onPress={addNote}>
+            <Ionicons name="add-circle" size={32} color="#4a4e69" />
           </TouchableOpacity>
         </View>
         <FlatList
-          data={sessions}
+          data={notes}
           keyExtractor={(_, i) => i.toString()}
-          renderItem={({ item, index }) => (
-            <View style={styles.sessionItem}>
-              <Text style={styles.sessionText}>{item}</Text>
-              <TouchableOpacity onPress={() => removeSession(index)}>
-                <Text style={styles.removeText}>✕</Text>
-              </TouchableOpacity>
+          renderItem={({ item }) => (
+            <View style={styles.noteItem}>
+              <Text style={styles.noteText}>{item}</Text>
             </View>
           )}
           style={{ width: "100%", marginTop: 24 }}
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   inputRow: { flexDirection: "row", alignItems: "center", width: "100%", marginBottom: 16 },
   input: {
     flex: 1,
-    height: 48,
+    minHeight: 48,
     backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 16,
@@ -71,16 +73,12 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginLeft: 8,
-    backgroundColor: "#4a4e69",
+    backgroundColor: "#fff",
     borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
+    padding: 4,
     elevation: 2,
   },
-  addButtonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  sessionItem: {
-    flexDirection: "row",
-    alignItems: "center",
+  noteItem: {
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 14,
@@ -91,16 +89,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.04,
     shadowRadius: 2,
     elevation: 1,
-    justifyContent: "space-between",
   },
-  sessionText: {
-    fontSize: 18,
+  noteText: {
+    fontSize: 16,
     color: "#22223b",
-  },
-  removeText: {
-    color: "#e63946",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginLeft: 12,
   },
 });

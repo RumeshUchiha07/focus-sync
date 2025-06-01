@@ -35,6 +35,14 @@ export default function ExamScheduler() {
         >
           <Text style={styles.buttonText}>Add Exam</Text>
         </TouchableOpacity>
+        {exams.length > 0 && (
+          <View style={styles.nextExam}>
+            <Text style={styles.nextExamTitle}>Next Exam:</Text>
+            <Text style={styles.nextExamText}>
+              {exams[0].exam} on {exams[0].date}
+            </Text>
+          </View>
+        )}
         <FlatList
           data={exams}
           keyExtractor={(_, i) => i.toString()}
@@ -86,4 +94,20 @@ const styles = StyleSheet.create({
   },
   examText: { fontSize: 16, color: "#22223b" },
   examDate: { fontSize: 16, color: "#4a4e69" },
+  nextExam: {
+    backgroundColor: "#fbc2eb",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 12,
+    alignItems: "center",
+  },
+  nextExamTitle: {
+    color: "#22223b",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  nextExamText: {
+    color: "#4a4e69",
+    fontSize: 15,
+  },
 });
