@@ -1,17 +1,45 @@
-# Welcome to your Expo app 👋
+# FocusSync Productivity App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+ 📝About FocusSync
 
-## Get started
+FocusSync is designed for students and professionals who want a single, beautiful app to manage their productivity.
+It brings together the best of Notion, Pomodoro, habit tracking, and AI—all with cloud sync and a minimal, distraction-free interface.
 
-1. Install dependencies
+Stay focused: Use Pomodoro cycles with built-in lofi music.
+Track progress: Habits, exams, and study sessions at a glance.
+Smart assistant: Ask the AI for help, summaries, or productivity tips.
+Sync everywhere: All your data is safe and available on any device.
 
+---
+
+## 🚀 Features
+
+- **Dashboard:** Modular widgets for Pomodoro, Habits, Exams, Planner, AI Chat, Notes, and Settings.
+- **Pomodoro Timer:** Customizable cycles, auto-breaks, lofi music (web), stats, and cloud sync.
+- **Habit Tracker:** Add, complete, and track habits with streaks and analytics.
+- **Exam Scheduler:** Add and view upcoming exams.
+- **Study Planner:** Organize and manage study sessions.
+- **Notes:** Quick notes with markdown support.
+- **AI Chat:** Gemini-powered productivity assistant.
+- **Account & Settings:** Manage your profile and sign out.
+- **Authentication:** Secure sign up, sign in, and password reset.
+- **Cloud Sync:** User data stored securely in Firebase.
+- **Minimal, beautiful design:** Consistent gradients, modern navigation, and responsive layout.
+
+---
+
+## 📦 Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd focus-sync
+   ```
+2. **Install dependencies:**
    ```bash
    npm install
    ```
-
-2. Start the app
-
+3. **Start the app:**
    ```bash
    npx expo start
    ```
@@ -48,3 +76,12 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+📚 Learn More
+Expo documentation
+Firebase documentation
+Gemini API (Google AI Studio)
+
