@@ -32,7 +32,7 @@ Sync everywhere: All your data is safe and available on any device.
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
+   git clone [<your-repo-url>](https://github.com/RumeshUchiha07/focus-sync.git)
    cd focus-sync
    ```
 2. **Install dependencies:**
