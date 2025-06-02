@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
+import ScreenWrapper from "@/components/ScreenWrapper";
 
 export default function HabitTracker() {
   const [habit, setHabit] = useState("");

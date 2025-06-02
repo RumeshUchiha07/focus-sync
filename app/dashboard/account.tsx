@@ -1,8 +1,9 @@
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
-import { auth } from "./firebaseConfig";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
+
 
 const db = getFirestore();
 

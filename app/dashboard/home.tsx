@@ -2,7 +2,7 @@ import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-ico
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
+import ScreenWrapper from "@/components/ScreenWrapper";
 
 export default function Home() {
   const router = useRouter();

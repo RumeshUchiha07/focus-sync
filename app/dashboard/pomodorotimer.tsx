@@ -1,18 +1,18 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
-import { auth } from "./firebaseConfig";
 
 const db = getFirestore();
 const LOFI_TRACKS = [
-  require("../assets/lofi/lofi.mp3"),
-  require("../assets/lofi/lofi-lofi-music-345370.mp3"),
-  require("../assets/lofi/lofi-lofi-song-345371.mp3"),
-  require("../assets/lofi/brain-implant-cyberpunk-sci-fi-trailer-action-intro-330416.mp3"),
-  require("../assets/lofi/future-design-344320.mp3"),
-  require("../assets/lofi/gorila-315977.mp3"),
-  require("../assets/lofi/jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3"),
+  require("../../assets/lofi/lofi.mp3"),
+  require("../../assets/lofi/lofi-lofi-music-345370.mp3"),
+  require("../../assets/lofi/lofi-lofi-song-345371.mp3"),
+  require("../../assets/lofi/brain-implant-cyberpunk-sci-fi-trailer-action-intro-330416.mp3"),
+  require("../../assets/lofi/future-design-344320.mp3"),
+  require("../../assets/lofi/gorila-315977.mp3"),
+  require("../../assets/lofi/jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3"),
 ];
 
 const getTrackSrc = (index: number) => {

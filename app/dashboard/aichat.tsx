@@ -1,29 +1,34 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
 import React, { useRef, useState } from "react";
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
 
-const GEMINI_API_KEY = "AIzaSyBUpqQY1uG0PuR36RDlhoD_ER506mbKmsA"; // Replace with your Gemini API key
+
+
+const OPENAI_API_KEY = "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"; // Store securely in production!
 
 async function fetchAIResponse(messages: { role: string; content: string }[]) {
-  // Gemini expects a single prompt string, so concatenate user/assistant messages
-  const prompt = messages
-    .map((m) => (m.role === "user" ? `User: ${m.content}` : `AI: ${m.content}`))
-    .join("\n");
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-3.5-turbo", // or "gpt-4o" if you have access
+      messages: messages,
+      max_tokens: 256,
+    }),
+  });
 
-  const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-      }),
-    }
-  );
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.error("OpenAI API error:", errorData);
+    return `Error: ${errorData.error?.message || "Unknown error"}`;
+  }
+
   const data = await res.json();
-  // Gemini's response structure
   return (
-    data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+    data?.choices?.[0]?.message?.content ||
     "Sorry, I couldn't generate a response."
   );
 }

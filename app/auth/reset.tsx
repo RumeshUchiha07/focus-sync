@@ -1,26 +1,30 @@
 import { useRouter } from "expo-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
-import { auth } from "./firebaseConfig";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
 
-export default function SignUpScreen() {
-  const router = useRouter();
+export default function ResetScreen() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSignUp = async () => {
-    if (!email || !password) return Alert.alert("Please fill all fields");
-    if (password !== confirm) return Alert.alert("Passwords do not match");
+  const handleReset = async () => {
+    if (!email) return Alert.alert("Please enter your email");
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.replace("/home");
+      await sendPasswordResetEmail(auth, email);
+      Alert.alert("Success", "Password reset email sent!");
+      router.replace("./signin");
     } catch (e: any) {
-      Alert.alert("Sign Up Error", e.message);
+      if (e.code === "auth/user-not-found") {
+        Alert.alert("Error", "No user found with this email.");
+      } else if (e.code === "auth/invalid-email") {
+        Alert.alert("Error", "Invalid email address.");
+      } else {
+        Alert.alert("Reset Error", e.message);
+      }
     }
     setLoading(false);
   };
@@ -28,8 +32,8 @@ export default function SignUpScreen() {
   return (
     <ScreenWrapper hideNav>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Create Account</Text>
-        <Text style={styles.subtitle}>Sign up to get started</Text>
+        <Text style={styles.title}>Reset Password</Text>
+        <Text style={styles.subtitle}>Enter your email to reset your password</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -39,27 +43,11 @@ export default function SignUpScreen() {
           value={email}
           onChangeText={setEmail}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry
-          value={confirm}
-          onChangeText={setConfirm}
-        />
-        <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? "Signing Up..." : "Sign Up"}</Text>
+        <TouchableOpacity style={styles.button} onPress={handleReset} disabled={loading}>
+          <Text style={styles.buttonText}>{loading ? "Sending..." : "Send Reset Email"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/signin")}>
-          <Text style={styles.link}>Already have an account? Sign In</Text>
+        <TouchableOpacity onPress={() => router.replace("./signin")}>
+          <Text style={styles.link}>Back to Sign In</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ScreenWrapper>
@@ -69,6 +57,7 @@ export default function SignUpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: "#f7f8fa", // Remove or comment this line to show gradient
     justifyContent: "center",
     alignItems: "center",
     padding: 24,
@@ -83,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#4a4e69",
     marginBottom: 32,
+    textAlign: "center",
   },
   input: {
     width: "100%",

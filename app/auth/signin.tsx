@@ -2,8 +2,9 @@ import { useRouter } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "./components/ScreenWrapper";
-import { auth } from "./firebaseConfig";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
+
 
 export default function SignInScreen() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function SignInScreen() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.replace("/home");
+      router.replace("/dashboard/home");
     } catch (e: any) {
       if (e.code === "auth/wrong-password") {
         Alert.alert("Error", "Incorrect password.");
@@ -56,10 +57,10 @@ export default function SignInScreen() {
         <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
           <Text style={styles.buttonText}>{loading ? "Signing In..." : "Sign In"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/signup")}>
+        <TouchableOpacity onPress={() => router.push("./signup")}>
           <Text style={styles.link}>Don`t have an account? Sign Up</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/reset")}>
+        <TouchableOpacity onPress={() => router.push("./reset")}>
           <Text style={styles.link}>Forgot Password?</Text>
         </TouchableOpacity>
       </SafeAreaView>
