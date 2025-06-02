@@ -1,8 +1,9 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
+import { useTheme } from "@/theme";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
-import { auth } from "@/firebaseConfig";
 
 
 const db = getFirestore();
@@ -11,6 +12,7 @@ export default function Account() {
   const user = auth.currentUser;
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
+  const { colors } = useTheme();
 
   // Fetch user data from Firestore
   useEffect(() => {
@@ -47,13 +49,16 @@ export default function Account() {
         <Text style={styles.value}>{user?.email}</Text>
         <Text style={styles.label}>Display Name</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder },
+          ]}
           value={displayName}
           onChangeText={setDisplayName}
           placeholder="Enter display name"
         />
-        <TouchableOpacity style={styles.button} onPress={handleSave} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? "Saving..." : "Save"}</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: colors.button }]} onPress={handleSave} disabled={loading}>
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>{loading ? "Saving..." : "Save"}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ScreenWrapper>

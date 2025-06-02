@@ -1,13 +1,22 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { auth } from "@/firebaseConfig";
+import { useTheme } from "@/theme";
 import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import React, { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Settings() {
   const router = useRouter();
-  const [darkMode, setDarkMode] = useState(false);
+  const { dark, colors, toggleTheme } = useTheme();
   const [notifications, setNotifications] = useState(true);
 
   const handleLogout = async () => {
@@ -21,37 +30,31 @@ export default function Settings() {
 
   return (
     <ScreenWrapper>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Settings</Text>
+      <SafeAreaView style={[styles.container]}>
+        <Text style={[styles.title, { color: colors.text }]}>Settings</Text>
 
-        <Text style={styles.sectionHeader}>Account Settings</Text>
+        <Text style={[styles.sectionHeader, { color: colors.text }]}>Account Settings</Text>
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, { backgroundColor: colors.button }]}
           onPress={() => router.push("./account")}
         >
-          <Text style={styles.buttonText}>Account</Text>
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>Account</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#e63946" }]}
+          style={[styles.button, { backgroundColor: colors.button }]}
           onPress={handleLogout}
         >
-          <Text style={styles.buttonText}>Sign Out</Text>
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>Sign Out</Text>
         </TouchableOpacity>
 
-        <Text style={styles.sectionHeader}>App Settings</Text>
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Dark Mode</Text>
-          <Switch
-            value={darkMode}
-            onValueChange={setDarkMode}
-          />
+        <Text style={[styles.sectionHeader, { color: colors.text }]}>App Settings</Text>
+        <View style={[styles.settingRow, { backgroundColor: colors.card }]}>
+          <Text style={[styles.settingLabel, { color: colors.text }]}>Dark Mode</Text>
+          <Switch value={dark} onValueChange={toggleTheme} />
         </View>
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Notifications</Text>
-          <Switch
-            value={notifications}
-            onValueChange={setNotifications}
-          />
+        <View style={[styles.settingRow, { backgroundColor: colors.card }]}>
+          <Text style={[styles.settingLabel, { color: colors.text }]}>Notifications</Text>
+          <Switch value={notifications} onValueChange={setNotifications} />
         </View>
       </SafeAreaView>
     </ScreenWrapper>
@@ -60,12 +63,11 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
-  title: { fontSize: 28, fontWeight: "bold", color: "#22223b", marginBottom: 32 },
+  title: { fontSize: 28, fontWeight: "bold", marginBottom: 32 },
   sectionHeader: {
     alignSelf: "flex-start",
     fontSize: 20,
     fontWeight: "600",
-    color: "#4a4e69",
     marginBottom: 12,
     marginTop: 24,
     letterSpacing: 0.5,
@@ -73,14 +75,14 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     height: 50,
-    backgroundColor: "#22223b",
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 16,
-    marginHorizontal: 8, // Added horizontal margin
+    marginHorizontal: 8,
+    elevation: 2,
   },
-  buttonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
+  buttonText: { fontSize: 18, fontWeight: "bold" },
   settingRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -88,13 +90,12 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 12,
     paddingHorizontal: 8,
-    backgroundColor: "#f2f2f2",
     borderRadius: 10,
     marginBottom: 12,
+    elevation: 1,
   },
   settingLabel: {
     fontSize: 16,
-    color: "#22223b",
     fontWeight: "500",
   },
 });

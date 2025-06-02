@@ -1,18 +1,24 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { useTheme } from "@/theme";
 import { useRouter } from "expo-router";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export default function Index() {
   const router = useRouter();
-
+  const { colors } = useTheme();
 
   return (
     <ScreenWrapper hideNav>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>FocusSync</Text>
         <Text style={styles.subtitle}>Welcome! Stay focused and in sync.</Text>
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/auth/signup")}>
-          <Text style={styles.buttonText}>Get Started</Text>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: colors.button }]}
+          onPress={() => router.push("/auth/signup")}
+        >
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>
+            Get Started
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("/auth/signin")}>
           <Text style={styles.link}>Already have an account? Sign In</Text>

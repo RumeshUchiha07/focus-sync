@@ -1,30 +1,48 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { useTheme } from "@/theme";
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
 
 export default function ExamScheduler() {
   const [exam, setExam] = useState("");
   const [date, setDate] = useState("");
   const [exams, setExams] = useState<{ exam: string; date: string }[]>([]);
+  const { colors } = useTheme();
 
   return (
     <ScreenWrapper>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Exam Scheduler</Text>
+      <SafeAreaView style={[styles.container]}>
+        <Text style={[styles.title, { color: colors.text }]}>Exam Scheduler</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: colors.inputBg,
+              color: colors.inputText,
+              borderColor: colors.inputBorder,
+            },
+          ]}
           placeholder="Exam Name"
+          placeholderTextColor={colors.subtext}
           value={exam}
           onChangeText={setExam}
         />
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: colors.inputBg,
+              color: colors.inputText,
+              borderColor: colors.inputBorder,
+            },
+          ]}
           placeholder="Date (e.g. 2025-06-01)"
+          placeholderTextColor={colors.subtext}
           value={date}
           onChangeText={setDate}
         />
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, { backgroundColor: colors.button }]}
           onPress={() => {
             if (exam && date) {
               setExams((prev) => [...prev, { exam, date }]);
@@ -33,12 +51,12 @@ export default function ExamScheduler() {
             }
           }}
         >
-          <Text style={styles.buttonText}>Add Exam</Text>
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>Add Exam</Text>
         </TouchableOpacity>
         {exams.length > 0 && (
-          <View style={styles.nextExam}>
-            <Text style={styles.nextExamTitle}>Next Exam:</Text>
-            <Text style={styles.nextExamText}>
+          <View style={[styles.nextExam, { backgroundColor: colors.accent }]}>
+            <Text style={[styles.nextExamTitle, { color: colors.buttonText }]}>Next Exam:</Text>
+            <Text style={[styles.nextExamText, { color: colors.buttonText }]}>
               {exams[0].exam} on {exams[0].date}
             </Text>
           </View>
@@ -47,9 +65,17 @@ export default function ExamScheduler() {
           data={exams}
           keyExtractor={(_, i) => i.toString()}
           renderItem={({ item }) => (
-            <View style={styles.examItem}>
-              <Text style={styles.examText}>{item.exam}</Text>
-              <Text style={styles.examDate}>{item.date}</Text>
+            <View
+              style={[
+                styles.examItem,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.inputBorder,
+                },
+              ]}
+            >
+              <Text style={[styles.examText, { color: colors.text }]}>{item.exam}</Text>
+              <Text style={[styles.examDate, { color: colors.subtext }]}>{item.date}</Text>
             </View>
           )}
         />
@@ -60,54 +86,48 @@ export default function ExamScheduler() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", padding: 24 },
-  title: { fontSize: 28, fontWeight: "bold", color: "#22223b", marginBottom: 16 },
+  title: { fontSize: 28, fontWeight: "bold", marginBottom: 16 },
   input: {
     width: "100%",
     height: 50,
-    backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#e0e1dd",
+    elevation: 1,
   },
   button: {
-    backgroundColor: "#22223b",
     borderRadius: 12,
     paddingVertical: 14,
     paddingHorizontal: 48,
     marginBottom: 18,
     elevation: 2,
   },
-  buttonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
+  buttonText: { fontSize: 18, fontWeight: "bold" },
   examItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 12,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: "#e0e1dd",
+    elevation: 1,
   },
-  examText: { fontSize: 16, color: "#22223b" },
-  examDate: { fontSize: 16, color: "#4a4e69" },
+  examText: { fontSize: 16 },
+  examDate: { fontSize: 16 },
   nextExam: {
-    backgroundColor: "#fbc2eb",
     borderRadius: 10,
     padding: 10,
     marginBottom: 12,
     alignItems: "center",
   },
   nextExamTitle: {
-    color: "#22223b",
     fontWeight: "bold",
     fontSize: 15,
   },
   nextExamText: {
-    color: "#4a4e69",
     fontSize: 15,
   },
 });

@@ -1,14 +1,16 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
+import { useTheme } from "@/theme";
 import { useRouter } from "expo-router";
 import { sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
-import { auth } from "@/firebaseConfig";
 
 export default function ResetScreen() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { colors } = useTheme();
 
   const handleReset = async () => {
     if (!email) return Alert.alert("Please enter your email");
@@ -35,7 +37,10 @@ export default function ResetScreen() {
         <Text style={styles.title}>Reset Password</Text>
         <Text style={styles.subtitle}>Enter your email to reset your password</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder },
+          ]}
           placeholder="Email"
           placeholderTextColor="#aaa"
           keyboardType="email-address"
@@ -43,8 +48,14 @@ export default function ResetScreen() {
           value={email}
           onChangeText={setEmail}
         />
-        <TouchableOpacity style={styles.button} onPress={handleReset} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? "Sending..." : "Send Reset Email"}</Text>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: colors.button }]}
+          onPress={handleReset}
+          disabled={loading}
+        >
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>
+            {loading ? "Sending..." : "Send Reset Email"}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.replace("./signin")}>
           <Text style={styles.link}>Back to Sign In</Text>
@@ -77,13 +88,11 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     height: 50,
-    backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#e0e1dd",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -92,7 +101,6 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     height: 50,
-    backgroundColor: "#22223b",
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
@@ -100,7 +108,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonText: {
-    color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },

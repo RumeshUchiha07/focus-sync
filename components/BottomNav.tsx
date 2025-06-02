@@ -1,4 +1,4 @@
-import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -6,7 +6,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const navItems = [
   { label: "Home", icon: (color: string) => <Ionicons name="home-outline" size={24} color={color} />, route: "/dashboard/home" },
   { label: "Pomodoro", icon: (color: string) => <Ionicons name="timer-outline" size={24} color={color} />, route: "/dashboard/pomodorotimer" },
-  { label: "AI Chat", icon: (color: string) => <MaterialCommunityIcons name="robot-outline" size={24} color={color} />, route: "/dashboard/aichat" },
   { label: "Exams", icon: (color: string) => <Ionicons name="calendar-outline" size={24} color={color} />, route: "/dashboard/examscheduler" },
   { label: "Habits", icon: (color: string) => <FontAwesome5 name="tasks" size={22} color={color} />, route: "/dashboard/habittracker" },
   { label: "Planner", icon: (color: string) => <Ionicons name="book-outline" size={24} color={color} />, route: "/dashboard/studyplanner" },

@@ -1,13 +1,15 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { auth } from "@/firebaseConfig";
+import { useTheme } from "@/theme";
 import { useRouter } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
-import { auth } from "@/firebaseConfig";
 
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -32,7 +34,7 @@ export default function SignUpScreen() {
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Sign up to get started</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder }]}
           placeholder="Email"
           placeholderTextColor="#aaa"
           keyboardType="email-address"
@@ -41,7 +43,7 @@ export default function SignUpScreen() {
           onChangeText={setEmail}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder }]}
           placeholder="Password"
           placeholderTextColor="#aaa"
           secureTextEntry
@@ -49,15 +51,15 @@ export default function SignUpScreen() {
           onChangeText={setPassword}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder }]}
           placeholder="Confirm Password"
           placeholderTextColor="#aaa"
           secureTextEntry
           value={confirm}
           onChangeText={setConfirm}
         />
-        <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? "Signing Up..." : "Sign Up"}</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: colors.button }]} onPress={handleSignUp} disabled={loading}>
+          <Text style={[styles.buttonText, { color: colors.buttonText }]}>{loading ? "Signing Up..." : "Sign Up"}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("./signin")}>
           <Text style={styles.link}>Already have an account? Sign In</Text>
@@ -88,13 +90,11 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     height: 50,
-    backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 16,
     fontSize: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#e0e1dd",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     height: 50,
-    backgroundColor: "#22223b",
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
@@ -111,7 +110,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonText: {
-    color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },
