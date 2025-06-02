@@ -10,7 +10,7 @@ const navItems = [
   { label: "Exams", icon: (color: string) => <Ionicons name="calendar-outline" size={24} color={color} />, route: "/examscheduler" },
   { label: "Habits", icon: (color: string) => <FontAwesome5 name="tasks" size={22} color={color} />, route: "/habittracker" },
   { label: "Planner", icon: (color: string) => <Ionicons name="book-outline" size={24} color={color} />, route: "/studyplanner" },
-  { label: "Account", icon: (color: string) => <Ionicons name="person-outline" size={24} color={color} />, route: "/account" },
+  { label: "Note", icon: (color: string) => <Ionicons name="documents-outline" size={24} color={color} />, route: "/notes" },
   { label: "Settings", icon: (color: string) => <Ionicons name="settings-outline" size={24} color={color} />, route: "/settings" },
 ];
 

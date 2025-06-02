@@ -2,25 +2,30 @@ import React, { useRef, useState } from "react";
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import ScreenWrapper from "./components/ScreenWrapper";
 
-// Replace with your own backend endpoint or use a secure proxy for OpenAI API
-const OPENAI_API_KEY = "sk-..."; // NEVER commit real keys to source control
+const GEMINI_API_KEY = "AIzaSyBUpqQY1uG0PuR36RDlhoD_ER506mbKmsA"; // Replace with your Gemini API key
 
 async function fetchAIResponse(messages: { role: string; content: string }[]) {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages,
-      temperature: 0.7,
-      stream: false,
-    }),
-  });
+  // Gemini expects a single prompt string, so concatenate user/assistant messages
+  const prompt = messages
+    .map((m) => (m.role === "user" ? `User: ${m.content}` : `AI: ${m.content}`))
+    .join("\n");
+
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+      }),
+    }
+  );
   const data = await res.json();
-  return data.choices?.[0]?.message?.content || "Sorry, I couldn't generate a response.";
+  // Gemini's response structure
+  return (
+    data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+    "Sorry, I couldn't generate a response."
+  );
 }
 
 export default function AIChat() {
