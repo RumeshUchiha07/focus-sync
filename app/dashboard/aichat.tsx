@@ -1,35 +1,40 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { useTheme } from "@/theme";
 import React, { useRef, useState } from "react";
-import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
 
-const OPENAI_API_KEY = "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"; // Store securely in production!
-
+// Fetch AI response from OpenRouter API
 async function fetchAIResponse(messages: { role: string; content: string }[]) {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: messages,
-      max_tokens: 256,
-    }),
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json();
-    console.error("OpenAI API error:", errorData);
-    return `Error: ${errorData.error?.message || "Unknown error"}`;
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-3.5-turbo", // or another model supported by OpenRouter
+        messages,
+      }),
+    });
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "Sorry, I couldn't generate a response.";
+  } catch (error) {
+    console.error("OpenRouter API error:", error);
+    return "Error: Unable to generate a response.";
   }
-
-  const data = await res.json();
-  return (
-    data?.choices?.[0]?.message?.content ||
-    "Sorry, I couldn't generate a response."
-  );
 }
 
 export default function AIChat() {
@@ -60,10 +65,15 @@ export default function AIChat() {
       const aiText = await fetchAIResponse(chatHistory);
       setMessages((prev) => [...prev, { text: aiText, from: "ai" }]);
     } catch (e) {
-      setMessages((prev) => [...prev, { text: "AI: Sorry, there was an error.", from: "ai" }]);
+      console.error("Error sending message:", e);
+      setMessages((prev) => [
+        ...prev,
+        { text: "AI: Sorry, there was an error.", from: "ai" },
+      ]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
     }
-    setLoading(false);
-    setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
   };
 
   return (
