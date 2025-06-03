@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+
+const App = () => {
+  const [videoURL, setVideoURL] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Inline Worker setup
+  const createInlineWorker = () => {
+    const workerCode = `
+      self.importScripts('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js');
+      const { createFFmpeg, fetchFile } = FFmpeg;
+      const ffmpeg = createFFmpeg({ log: false });
+
+      self.onmessage = async (e) => {
+        const file = e.data;
+        if (!ffmpeg.isLoaded()) await ffmpeg.load();
+
+        ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(file));
+        await ffmpeg.run('-i', 'input.mp4', '-vcodec', 'libx264', '-crf', '28', 'output.mp4');
+        const data = ffmpeg.FS('readFile', 'output.mp4');
+
+        const blob = new Blob([data.buffer], { type: 'video/mp4' });
+        self.postMessage(blob);
+      };
+    `;
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    return new Worker(URL.createObjectURL(blob));
+  };
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setLoading(true);
+    const worker = createInlineWorker();
+    worker.postMessage(file);
+
+    worker.onmessage = (e) => {
+      const blob = e.data;
+      const url = URL.createObjectURL(blob);
+      setVideoURL(url);
+      setLoading(false);
+      worker.terminate();
+    };
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>🎥 Video Compressor (React + Inline Worker)</h2>
+      <input type="file" accept="video/*" onChange={handleUpload} />
+      {loading && <p>Compressing video...⏳</p>}
+      {videoURL && (
+        <div>
+          <h3>Compressed Video:</h3>
+          <video src={videoURL} controls width="400" />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;

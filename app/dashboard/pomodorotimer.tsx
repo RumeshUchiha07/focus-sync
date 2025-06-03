@@ -18,13 +18,33 @@ import Svg, { Circle } from "react-native-svg";
 
 const db = getFirestore();
 const LOFI_TRACKS = [
-  require("../../assets/lofi/lofi.mp3"),
-  require("../../assets/lofi/lofi-lofi-music-345370.mp3"),
-  require("../../assets/lofi/lofi-lofi-song-345371.mp3"),
+  require("../../assets/lofi/A Cruel Angel's Thesis (Evangelion).mp3"),
+  require("../../assets/lofi/Again (Fullmetal Alchemist Brotherhood).mp3"),
+  require("../../assets/lofi/Again Lofi (Fullmetal Alchemist Brotherhood).mp3"),
+  require("../../assets/lofi/Agni Kai.mp3"),
+  require("../../assets/lofi/Alone.mp3"),
+  require("../../assets/lofi/Apple Seed.mp3"),
+  require("../../assets/lofi/Arrietty's Song.mp3"),
+  require("../../assets/lofi/Attack on Titan.mp3"),
+  require("../../assets/lofi/Avatar_ the Last Airbender.mp3"),
+  require("../../assets/lofi/Azalea Town - Lofi.mp3"),
+  require("../../assets/lofi/Barricades.mp3"),
+  require("../../assets/lofi/Blue Bird.mp3"),
+  require("../../assets/lofi/Boku No Sensou (My War).mp3"),
   require("../../assets/lofi/brain-implant-cyberpunk-sci-fi-trailer-action-intro-330416.mp3"),
-  require("../../assets/lofi/future-design-344320.mp3"),
-  require("../../assets/lofi/gorila-315977.mp3"),
-  require("../../assets/lofi/jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3"),
+  require("../../assets/lofi/Call of Silence.mp3"),
+  require("../../assets/lofi/Call Your Name.mp3"),
+  require("../../assets/lofi/Castle In the Sky (Carrying You).mp3"),
+  require("../../assets/lofi/Colors (Code Geass).mp3"),
+  require("../../assets/lofi/Crossing Field (Sword Art Online).mp3"),
+  require("../../assets/lofi/Crossing Fields (Sword Art Online).mp3"),
+  require("../../assets/lofi/Dark World.mp3"),
+  require("../../assets/lofi/Departure (Hunter X Hunter).mp3"),
+  require("../../assets/lofi/Departure Lofi (Hunter X Hunter).mp3"),
+  require("../../assets/lofi/Difficult.mp3"),
+  require("../../assets/lofi/Fairy Fountain.mp3"),
+  require("../../assets/lofi/Fairy Tail Theme.mp3"),
+  // Add more require statements here for any additional files in assets/lofi
 ];
 
 const getTrackSrc = (index: number) => {
