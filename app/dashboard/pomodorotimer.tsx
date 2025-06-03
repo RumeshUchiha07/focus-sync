@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 
 const db = getFirestore();
 const LOFI_TRACKS = [
@@ -65,6 +66,21 @@ export default function PomodoroTimer() {
     fetchCycles();
   }, []);
 
+  // Helper for circular progress
+  const CIRCLE_SIZE = 225;
+  const STROKE_WIDTH = 14;
+  const RADIUS = (CIRCLE_SIZE - STROKE_WIDTH) / 2;
+  const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+  // Calculate progress based on mode
+  const getTotalSeconds = () => {
+    if (mode === "Work") return parseInt(workDuration) * 60;
+    if (mode === "Short Break") return parseInt(shortBreakDuration) * 60;
+    if (mode === "Long Break") return parseInt(longBreakDuration) * 60;
+    return 1;
+  };
+  const progress = 1 - seconds / getTotalSeconds();
+
   // Timer logic
   useEffect(() => {
     if (isRunning) {
@@ -73,7 +89,7 @@ export default function PomodoroTimer() {
           if (s <= 1) {
             clearInterval(interval.current!);
             setIsRunning(false);
-            handleCycleEnd();
+            setTimeout(() => handleCycleEnd(), 500); // Delay to allow state update
             return 0;
           }
           return s - 1;
@@ -98,16 +114,15 @@ export default function PomodoroTimer() {
       if (nextCycleCount % parseInt(cyclesBeforeLongBreak) === 0) {
         setMode("Long Break");
         setSeconds(parseInt(longBreakDuration) * 60);
-        setIsRunning(true);
       } else {
         setMode("Short Break");
         setSeconds(parseInt(shortBreakDuration) * 60);
-        setIsRunning(true);
       }
+      setTimeout(() => setIsRunning(true), 300); // Restart timer after mode/seconds update
     } else {
       setMode("Work");
       setSeconds(parseInt(workDuration) * 60);
-      setIsRunning(true);
+      setTimeout(() => setIsRunning(true), 300); // Restart timer after mode/seconds update
     }
   };
 
@@ -181,8 +196,35 @@ export default function PomodoroTimer() {
   return (
     <ScreenWrapper>
       <SafeAreaView style={[styles.container]}>
-        <Text style={[styles.title, { color: colors.text }]}>{mode}</Text>
-        <Text style={[styles.timer, { color: colors.text }]}>{format(seconds)}</Text>
+        <View style={{ alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+          <Svg width={CIRCLE_SIZE} height={CIRCLE_SIZE}>
+            <Circle
+              cx={CIRCLE_SIZE / 2}
+              cy={CIRCLE_SIZE / 2}
+              r={RADIUS}
+              stroke={colors.inputBorder}
+              strokeWidth={STROKE_WIDTH}
+              fill="none"
+            />
+            <Circle
+              cx={CIRCLE_SIZE / 2}
+              cy={CIRCLE_SIZE / 2}
+              r={RADIUS}
+              stroke={mode === "Work" ? colors.accent : colors.primary}
+              strokeWidth={STROKE_WIDTH}
+              fill="none"
+              strokeDasharray={CIRCUMFERENCE}
+              strokeDashoffset={CIRCUMFERENCE * (1 - progress)}
+              strokeLinecap="round"
+              rotation="-90"
+              origin={`${CIRCLE_SIZE / 2},${CIRCLE_SIZE / 2}`}
+            />
+          </Svg>
+          <View style={styles.timerOverlay}>
+            <Text style={[styles.title, { color: colors.text }]}>{mode}</Text>
+            <Text style={[styles.timer, { color: colors.text }]}>{format(seconds)}</Text>
+          </View>
+        </View>
         <View style={styles.row}>
           <TouchableOpacity
             style={[
@@ -403,5 +445,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 8,
     fontWeight: "600",
+  },
+  timerOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 220,
+    height: 220,
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
   },
 });

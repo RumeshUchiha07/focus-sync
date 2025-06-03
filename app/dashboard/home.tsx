@@ -3,7 +3,7 @@ import { useTheme } from "@/theme";
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Home() {
   const router = useRouter();
@@ -89,17 +89,6 @@ export default function Home() {
             </TouchableOpacity>
           ))}
         </View>
-        <TouchableOpacity style={[styles.button, { backgroundColor: colors.button }]}>
-          <Text style={[styles.buttonText, { color: colors.buttonText }]}>Button</Text>
-        </TouchableOpacity>
-        <TextInput
-          style={[
-            styles.input,
-            { backgroundColor: colors.inputBg, color: colors.inputText, borderColor: colors.inputBorder },
-          ]}
-          placeholder="Type here..."
-          placeholderTextColor={colors.subtext}
-        />
       </SafeAreaView>
     </ScreenWrapper>
   );
