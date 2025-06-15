@@ -1,18 +1,127 @@
-# FocusSync Productivity App
 
- 📝About FocusSync
+# 🎯 FocusSync Productivity App
 
-FocusSync is designed for students and professionals who want a single, beautiful app to manage their productivity.
-It brings together the best of Notion, Pomodoro, habit tracking, and AI—all with cloud sync and a minimal, distraction-free interface.
-
-Stay focused: Use Pomodoro cycles with built-in lofi music.
-Track progress: Habits, exams, and study sessions at a glance.
-Smart assistant: Ask the AI for help, summaries, or productivity tips.
-Sync everywhere: All your data is safe and available on any device.
+Welcome to **FocusSync** – your all-in-one productivity playground!  
+Whether you're a student, a professional, or just someone who loves to get things DONE (with a side of lofi beats), FocusSync is here to help you crush your goals, track your habits, and vibe your way to success. 🚀
 
 ---
 
-## 🚀 Features
+## ✨ What is FocusSync?
+
+FocusSync is a beautiful, minimal, and powerful productivity app that brings together the best tools for focus and organization:
+
+- **Pomodoro Timer** with customizable cycles and built-in lofi music (web)
+- **Habit Tracker** to build streaks and celebrate wins
+- **Exam Scheduler** for never missing a test
+- **Study Planner** to organize your sessions
+- **Notes** with markdown support for quick thoughts
+- **AI Chat** powered by Gemini for productivity tips and summaries
+- **Account & Settings** for a personalized experience
+- **Cloud Sync** with Firebase – your data, everywhere, always
+
+All wrapped up in a distraction-free, modern interface.  
+Stay focused, stay synced, and let your productivity flow! 🌊
+
+---
+
+## 🎵 Lofi Music Library
+
+Need some chill beats while you work?  
+FocusSync comes with a curated collection of lofi tracks, including:
+
+```
+assets/lofi/
+├── A Cruel Angel's Thesis (Evangelion).mp3
+├── Again (Fullmetal Alchemist Brotherhood).mp3
+├── Again Lofi (Fullmetal Alchemist Brotherhood).mp3
+├── Agni Kai.mp3
+├── Alone.mp3
+├── Apple Seed.mp3
+├── Arrietty's Song.mp3
+├── Attack on Titan.mp3
+├── Avatar_ the Last Airbender.mp3
+├── Azalea Town - Lofi.mp3
+├── Barricades.mp3
+├── Blue Bird.mp3
+├── Boku No Sensou (My War).mp3
+├── brain-implant-cyberpunk-sci-fi-trailer-action-intro-330416.mp3
+├── Call of Silence.mp3
+├── Call Your Name.mp3
+├── Castle In the Sky (Carrying You).mp3
+├── Colors (Code Geass).mp3
+├── Crossing Field (Sword Art Online).mp3
+├── Crossing Fields (Sword Art Online).mp3
+├── Dark World.mp3
+├── Departure (Hunter X Hunter).mp3
+├── Departure Lofi (Hunter X Hunter).mp3
+├── Difficult.mp3
+├── Fairy Fountain.mp3
+├── Fairy Tail Theme.mp3
+└── ...and more!
+```
+
+Just hit "Play Lofi" in the Pomodoro widget and let the focus begin! (Web only for now.)
+
+---
+
+## 🚀 Getting Started
+
+Ready to boost your productivity?  
+Follow these steps and you'll be up and running in no time:
+
+### 1. **Clone the Repo**
+
+```bash
+git clone https://github.com/RumeshUchiha07/focus-sync.git
+cd focus-sync
+```
+
+### 2. **Install Dependencies**
+
+```bash
+npm install
+```
+
+### 3. **Start the App**
+
+```bash
+npx expo start
+```
+
+You'll see options to open the app in:
+
+- [Expo Go](https://expo.dev/go) (scan the QR code!)
+- Android emulator
+- iOS simulator
+- Web browser
+
+> **Pro tip:**  
+> You can start developing by editing the files inside the **app** directory.  
+> This project uses [file-based routing](https://docs.expo.dev/router/introduction) for easy navigation.
+
+---
+
+## 🛠️ Project Structure
+
+```
+focus-sync/
+├── app/           # All your screens and features
+│   ├── dashboard/
+│   ├── auth/
+│   └── ...
+├── assets/
+│   ├── fonts/
+│   ├── images/
+│   └── lofi/
+├── components/    # Reusable UI components
+├── theme.tsx      # Light & dark mode themes
+├── firebaseConfig.ts # Firebase setup
+└── ...
+```
+
+---
+
+## 🌈 Features at a Glance
 
 - **Dashboard:** Modular widgets for Pomodoro, Habits, Exams, Planner, AI Chat, Notes, and Settings.
 - **Pomodoro Timer:** Customizable cycles, auto-breaks, lofi music (web), stats, and cloud sync.
@@ -28,60 +137,26 @@ Sync everywhere: All your data is safe and available on any device.
 
 ---
 
-## 📦 Installation
+## 🧑‍💻 Contributing
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/RumeshUchiha07/focus-sync.git
-   cd focus-sync
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Start the app:**
-   ```bash
-   npx expo start
-   ```
+Pull requests are welcome!  
+For major changes, please open an issue first to discuss what you would like to change.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📚 Learn More
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- [Expo documentation](https://docs.expo.dev/)
+- [Firebase documentation](https://firebase.google.com/docs)
+- [Gemini API (Google AI Studio)](https://aistudio.google.com/app/apikey)
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🎉 That's it!
 
-```bash
-npm run reset-project
+Now go forth and **FocusSync** your life!  
+Stay productive, stay chill, and remember:  
+> "Great things are done by a series of small things brought together." – Vincent Van Gogh
+
+Happy focusing! ✨
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-
-🤝 Contributing
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-📚 Learn More
-Expo documentation
-Firebase documentation
-Gemini API (Google AI Studio)
-
